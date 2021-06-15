@@ -1,0 +1,121 @@
+﻿@model PagedList.IPagedList<Models.EF.Product>
+@using PagedList.Mvc
+@using PagedList
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+@using (Html.BeginForm("Index", "Products", FormMethod.Post))
+{
+    <div class="col-lg-12 form-group">
+        <div class=" col-md-4">
+            <i class="fa fa-list-alt"> Quản lý sản phẩm</i>
+        </div>
+        <div class=" col-md-4" style=" float: left; margin-left: 500px; margin-top:5px">
+            <input type="text" value="@ViewBag.SearchString" name="searchString" placeholder="Nhập từ khóa tìm kiếm...." class="form-control" />
+        </div>
+        <div style="text-align: center; float: left">
+            <button class="btn btn-primary m-1" type="submit">Tìm kiếm</button>
+        </div>
+
+        <div class=" col-md-6">
+            @Html.ActionLink("Tạo mới", "Create", "Products", new { @class = "btn btn-danger" })
+        </div>
+
+
+    </div>
+}
+<div class="col-lg-12 form-group">
+    <table class="table" style="background-color: white">
+        <tr>
+            <th>STT</th>
+            <th>
+                Danh mục sản phẩm
+            </th>
+            <th>
+                Tên sản phẩm
+            </th>
+            <th>
+                Hình ảnh
+            </th>
+            @*<th>
+                    @Html.DisplayNameFor(model => model.MoreImage)
+                </th>*@
+            <th>
+                Giá
+            </th>
+            @* <th>
+                    @Html.DisplayNameFor(model => model.PriceKM)
+                </th>*@
+            <th>
+                Số lượng
+            </th>
+            @*<th>
+                    @Html.DisplayNameFor(model => model.RemainingAmount)
+                </th>*@
+            @*<th>
+                    @Html.DisplayNameFor(model => model.Detail)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.CauHinh)
+                </th>*@
+            @*<th>
+                    @Html.DisplayNameFor(model => model.Status)
+                </th>*@
+            <th>Thao tác</th>
+        </tr>
+        @{var i = 1; }
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td style=" text-align: center">@i</td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CategotyProduct.Name)
+                </td>
+                <td>
+                    @item.Name
+                </td>
+                <td>
+                    <img src="@Url.Content(item.Image)" style="width: 50px; height:50px;margin:5px" />
+                    @*@Html.DisplayFor(modelItem => item.Image)*@
+                </td>
+                @*<td>
+                        @Html.DisplayFor(modelItem => item.MoreImage)
+                    </td>*@
+            <td>
+                @string.Format("{0:#,##0.00}", item.Price) <span>VNĐ</span>
+            </td>
+                @*<td>
+                        @Html.DisplayFor(modelItem => item.PriceKM)
+                    </td>*@
+                <td>
+                    @item.Quantity
+                </td>
+                @*<td>
+                        @Html.DisplayFor(modelItem => item.RemainingAmount)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Detail)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CauHinh)
+                    </td>*@
+                @*<td>
+                        @Html.DisplayFor(modelItem => item.Status)
+                    </td>*@
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
+                    @Html.ActionLink("Details", "Details", new { id = item.ID }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.ID })
+                </td>
+            </tr>
+            i++;
+        }
+
+    </table>
+    </div>
+    <div style="text-align:center;margin-left: 50%;margin-right:50%">
+        @Html.PagedListPager((IPagedList)Model, page => Url.Action("Index", new { page, @searchString = @ViewBag.SearchString }))
+    </div>

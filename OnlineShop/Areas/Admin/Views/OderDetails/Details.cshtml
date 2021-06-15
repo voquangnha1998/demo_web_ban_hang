@@ -1,0 +1,65 @@
+﻿@model Models.EF.OderDetail
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+    
+}
+<h2>Chi tiết đơn hàng của khách hàng - @Model.Oder.User.Name với mã khách hàng :@Model.Oder.User.ID</h2>
+<div class="container mt-5 mb-5">
+    <div class="row d-flex justify-content-center">
+        <div class="col-md-10">
+            <div class="card">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="images p-3">
+                            <div class="text-center p-4"><img src="@Url.Content(Model.Product.Image)" style="width: 200px; height:250px;margin:10px" /> </div>
+
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="product p-4">
+
+                            <div class="mt-4 mb-3">
+                                <h2>Tên người nhận</h2>
+                                <h4>
+                                    @Model.Oder.ShipName
+                                </h4>
+                                <h2>Tên sản phẩm</h2>
+                                <h4>@Model.Product.Name</h4>
+                                <h2>Số lượng</h2>
+                                <h4>@Model.Quantity</h4>
+                                <h2>Số điện thoại</h2>
+                                <h4>@Model.Oder.ShipPhone</h4>
+                                <h2>Địa chỉ người nhận</h2>
+                                <h4>@Model.Oder.ShipAddress</h4>
+                                <h2>Ngày tạo</h2>
+                                <h4>@Model.Oder.CreateDate</h4>
+                                <h2>Giá sản phẩm</h2>
+                                <h4>@(Model.Price.HasValue ? Model.Price.Value.ToString("N0"):"Liên hệ")</h4>
+
+
+
+                                @using (Html.BeginForm("Index", "Oders", FormMethod.Post))
+                                {
+
+                                    <div class=" col-md-1">
+                                        @Html.ActionLink("Duyệt", "Duyet", "OderDetails", new { id = Model.OderID }, new { @class = "btn btn-danger" })
+                                    </div>
+
+
+                                }
+                                <p>
+
+                                    @Html.ActionLink("Back to List", "Index", new { @class = "btn btn-primary m-1" })
+                                </p>
+                            </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div>
+   
+

@@ -1,0 +1,88 @@
+USE master
+Create database QLBanHang
+go
+USE QLBanHang
+go
+
+CREATE TABLE Users(
+	ID int IDENTITY(1,1) PRIMARY KEY,
+	Name NVARCHAR(250),
+	Address NVARCHAR(250),
+	Email VARCHAR(250),
+	Phone VARCHAR(250),
+	UserName VARCHAR(250),
+	Pass VARCHAR(250),
+	Avartar NVARCHAR(250),
+	Status bit default(1),
+)
+CREATE TABLE Feedback(
+	ID int IDENTITY(1,1) PRIMARY KEY,
+	UserID int FOREIGN KEY REFERENCES dbo.Users(ID),
+	Content nvarchar(500),
+	Status bit default(1)
+)
+go
+CREATE TABLE CategotyProduct(
+	ID int IDENTITY(1,1) PRIMARY KEY,
+	Name NVARCHAR(250),
+)
+go
+CREATE TABLE Product(
+	ID int IDENTITY(1,1) PRIMARY KEY,
+	Name NVARCHAR(250),
+	CatProID int FOREIGN KEY REFERENCES dbo.CategotyProduct(ID),
+	Image NVARCHAR(250),
+	MoreImage xml,
+	Price decimal(18,0),
+	PriceKM decimal(18,0),
+	Quantity int,
+	RemainingAmount int,
+	Detail ntext,
+	CauHinh NVARCHAR(250),
+	CreateDate datetime not null default(getdate()),
+	Status bit default(1)
+)
+go
+CREATE TABLE Oder(
+	ID int IDENTITY(1,1) PRIMARY KEY,
+	UserID int FOREIGN KEY REFERENCES dbo.Users(ID),
+	ShipName NVARCHAR(100),
+	ShipPhone NVARCHAR(100),
+	ShipAddress NVARCHAR(100),
+	CreateDate datetime not null default(getdate()),
+	Status bit default(1),
+)
+go
+CREATE TABLE OderDetail(
+	ProID int FOREIGN KEY REFERENCES dbo.Product(ID),
+	OderID int FOREIGN KEY REFERENCES dbo.Oder(ID),
+	Quantity int,
+	Price decimal(18,0),
+	PRIMARY KEY(ProID,OderID)
+)
+
+
+go
+CREATE TABLE Admin(
+	ID int IDENTITY(1,1) PRIMARY KEY,
+	Name NVARCHAR(250),
+	Address NVARCHAR(250),
+	Email VARCHAR(250),
+	Phone VARCHAR(250),
+	UserName VARCHAR(250),
+	Pass VARCHAR(250),
+	Avartar NVARCHAR(250),
+)
+
+USE QLBanHang
+go
+insert into Oder(UserID,ShipName,ShipPhone,ShipAddress)
+values
+(3,N'Nguyễn Ngọc Anh','0325871777',N'Thanh Sơn'),
+(4,N'Trần Võ Lập','0987654321',N'Thanh Bình');
+
+go
+insert into OderDetail(ProID,OderID,Quantity,Price)
+values
+(36,14,1,12900000),
+(37,15,2,6400000);

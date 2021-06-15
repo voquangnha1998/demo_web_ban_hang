@@ -1,0 +1,43 @@
+﻿@model IEnumerable<Models.EF.CategotyProduct>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<div class=" col-md-4">
+    <i class="fa fa-list">  Quản lý danh mục</i>
+</div>
+
+@*<p>
+    @Html.ActionLink("Create New", "Create")
+</p>*@
+@*<div class=" col-md-6">
+    @Html.ActionLink("Tạo mới", "Create", "CategotyProducts", new { @class = "btn btn-danger" })
+</div>*@
+<table class="table" style="margin-top: 20px;background-color: white">
+    <tr>
+        <th>STT</th>
+        <th>
+            @Html.DisplayNameFor(model => model.Name)
+        </th>
+        <th></th>
+    </tr>
+    @{ var i = 1;}
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@i</td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
+                @Html.ActionLink("Details", "Details", new { id = item.ID }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.ID })
+            </td>
+        </tr>
+        i++;
+    }
+
+</table>

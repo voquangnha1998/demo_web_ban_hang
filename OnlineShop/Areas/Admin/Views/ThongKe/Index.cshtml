@@ -1,0 +1,457 @@
+﻿@model PagedList.IPagedList<Models.EF.Product>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Start your development with a Dashboard for Bootstrap 4.">
+    <meta name="author" content="Creative Tim">
+    <title>Argon Dashboard - Free Dashboard for Bootstrap 4</title>
+    <!-- Favicon -->
+    <link rel="icon" href="~/Assets/assets/img/brand/favicon.png" type="image/png">
+    <!-- Fonts -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700">
+    <!-- Icons -->
+    <link rel="stylesheet" href="~/Assets/assets/vendor/nucleo/css/nucleo.css" type="text/css">
+    @*<link rel="stylesheet" href="Assets/assets/vendor/@fortawesome/fontawesome-free/css/all.min.css" type="text/css">*@
+    <!-- Page plugins -->
+    <!-- Argon CSS -->
+    <link rel="stylesheet" href="~/Assets/assets/css/argon.css?v=1.2.0" type="text/css">
+
+
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+    <script src="https://code.highcharts.com/modules/export-data.js"></script>
+    <script src="https://code.highcharts.com/modules/accessibility.js"></script>
+    <script src="~/Scripts/chart/exporting.js"></script>
+    <script src="~/Scripts/chart/highcharts.js"></script>
+
+</head>
+<div class="header bg-primary pb-6">
+    <div class="container-fluid">
+        <div class="header-body">
+            <div class="row align-items-center py-4">
+                <div class="col-lg-6 col-7">
+                    <h6 class="h2 text-white d-inline-block mb-0">Thống kê</h6>
+                    <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
+                        <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
+                            <li class="breadcrumb-item"><a href="#"><i class="fas fa-home"></i></a></li>
+                            <li class="breadcrumb-item"><a href="#">Dashboards</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">Thống kê</li>
+                        </ol>
+                    </nav>
+                </div>
+
+            </div>
+            <!-- Card stats -->
+            <div class="row">
+                <div class="col-xl-3 col-md-6">
+                    <div class="card card-stats">
+                        <!-- Card body -->
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col">
+                                    <h5 class="card-title text-uppercase text-muted mb-0">Tổng số lượng đơn hàng</h5>
+                                    <span class="h2 font-weight-bold mb-0">@ViewBag.ThongKeSoDH</span>
+                                </div>
+                                <div class="col-auto">
+                                    <div class="icon icon-shape bg-gradient-red text-white rounded-circle shadow">
+                                        <i class="ni ni-active-40"></i>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-3 col-md-6">
+                    <div class="card card-stats">
+                        <!-- Card body -->
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col">
+                                    <h5 class="card-title text-uppercase text-muted mb-0">Đơn hàng chưa duyệt</h5>
+                                    <span class="h2 font-weight-bold mb-0">@ViewBag.ThongKeSoDHChuaDuyet</span>
+                                </div>
+                                <div class="col-auto">
+                                    <div class="icon icon-shape bg-gradient-orange text-white rounded-circle shadow">
+                                        <i class="ni ni-chart-pie-35"></i>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-3 col-md-6">
+                    <div class="card card-stats">
+                        <!-- Card body -->
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col">
+                                    <h5 class="card-title text-uppercase text-muted mb-0">Doanh Thu</h5>
+                                    <span class="h2 font-weight-bold mb-0">@ViewBag.TongDoanhThu.ToString("N0") <span>VNĐ</span></span>
+                                </div>
+                                <div class="col-auto">
+                                    <div class="icon icon-shape bg-gradient-green text-white rounded-circle shadow">
+                                        <i class="ni ni-money-coins"></i>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-3 col-md-6">
+                    <div class="card card-stats">
+                        <!-- Card body -->
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col">
+                                    <h5 class="card-title text-uppercase text-muted mb-0">Tổng số sản phẩm</h5>
+                                    <span class="h2 font-weight-bold mb-0">@ViewBag.ThongKeSanPham</span>
+                                </div>
+                                <div class="col-auto">
+                                    <div class="icon icon-shape bg-gradient-info text-white rounded-circle shadow">
+                                        <i class="ni ni-chart-bar-32"></i>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Page content -->
+<div class="container-fluid mt--6">
+    <div class="row">
+        <div class="col-xl-7">
+            <div class="card bg-default">
+                <div class="card-header bg-transparent">
+
+
+                    <h6 class="text-light text-uppercase ls-1 mb-1">Sản phẩm</h6>
+                    <h5 class="h3 text-white mb-0"> Các lượt mua của các sản phẩm</h5>
+
+                    <div id="container1" style="min-width: 510px; height: 400px; margin: 0 auto"></div>
+                </div>
+                <div class="card-body">
+                    Chart
+
+                    <script>
+                    </script>
+                    @*<div class="chart">
+                             Chart wrapper
+                            <canvas id="chart-sales-dark" class="chart-canvas"></canvas>
+                        </div>*@
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-5">
+            <div class="card">
+                <div class="card-header bg-transparent">
+                    <div class="row align-items-center">
+                        <div class="col">
+                            <h6 class="text-uppercase text-muted ls-1 mb-1">Biều đồ</h6>
+                            <h5 class="h3 mb-0">Trạng thái đơn hàng</h5>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Chart -->
+                <!--biểu đồ 1-->
+                <div class="jumbotron">
+                    <div id="container" style="min-width: 310px; height: 300px; max-width: 600px"></div>
+                </div>
+
+            </div>
+        </div>
+        <div class="col-xl-5">
+            <div class="card bg-default">
+                <div class="card-header bg-transparent">
+                    <div class="row align-items-center">
+                        <div class="col">
+                            <h6 class="text-light text-uppercase ls-1 mb-1">Thương hiệu</h6>
+                            <h5 class="h3 text-white mb-0">Các thương hiệu có trong của hàng</h5>
+                        </div>
+
+                        <div id="container2" style="min-width: 350px; height: 400px; max-width: 450px; margin: 0 auto"></div>
+
+
+                    </div>
+                </div>
+                <div class="card-body">
+                    Chart
+
+                    <script>
+                    </script>
+                    @*<div class="chart">
+                             Chart wrapper
+                            <canvas id="chart-sales-dark" class="chart-canvas"></canvas>
+                        </div>*@
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-7">
+            <div class="card">
+                <div class="card-header border-0" style="background-color:Highlight">
+                    <div class="row align-items-center">
+                        <div class="col">
+                            <h3 class="mb-0" style="text-align: center; color: black">Sảm phẩm bán chạy nhất</h3>
+                        </div>
+
+                    </div>
+                </div>
+                <table class="table">
+                    <tr>
+                        <th style=" width: 6px">STT</th>
+                        <th>
+                            Tên SP
+                        </th>
+                        <th>
+                           Giá SP
+                        </th>
+                        <th>
+                            SL Bán
+                        </th>
+                        
+                    </tr>
+                    @{var i = 1; }
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td style=" text-align: center">@i</td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Name)
+                            </td>
+                            <td>
+                                @string.Format("{0:#,##0.00}", item.Price) <span>VNĐ</span>
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.QuantitySold)
+                            </td>
+                            
+                        </tr>
+                        i++;
+                    }
+
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer pt-0">
+        <div class="row align-items-center justify-content-lg-between">
+            <div class="col-lg-6">
+                <div class="copyright text-center  text-lg-left  text-muted">
+                    &copy; 2020 <a href="https://www.creative-tim.com" class="font-weight-bold ml-1" target="_blank">Creative Tim</a>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <ul class="nav nav-footer justify-content-center justify-content-lg-end">
+                    <li class="nav-item">
+                        <a href="https://www.creative-tim.com" class="nav-link" target="_blank">Creative Tim</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="https://www.creative-tim.com/presentation" class="nav-link" target="_blank">About Us</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="http://blog.creative-tim.com" class="nav-link" target="_blank">Blog</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="https://github.com/creativetimofficial/argon-dashboard/blob/master/LICENSE.md" class="nav-link" target="_blank">MIT License</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </footer>
+</div>
+<!-- Argon Scripts -->
+<!-- Core -->
+<script src="~/Assets/assets/vendor/jquery/dist/jquery.min.js"></script>
+<script src="~/Assets/assets/vendor/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+<script src="~/Assets/assets/vendor/js-cookie/js.cookie.js"></script>
+<script src="~/Assets/assets/vendor/jquery.scrollbar/jquery.scrollbar.min.js"></script>
+<script src="~/Assets/assets/vendor/jquery-scroll-lock/dist/jquery-scrollLock.min.js"></script>
+<!-- Optional JS -->
+<script src="~/Assets/assets/vendor/chart.js/dist/Chart.min.js"></script>
+<script src="~/Assets/assets/vendor/chart.js/dist/Chart.extension.js"></script>
+<!-- Argon JS -->
+<script src="~/Assets/assets/js/argon.js?v=1.2.0"></script>
+<!--biểu đồ 1-->
+<script>
+
+
+    $(document).ready(function () {
+        $.getJSON("/ThongKe/GetData", function (data) {
+
+
+
+            Highcharts.chart('container', {
+                chart: {
+                    plotBackgroundColor: null,
+                    plotBorderWidth: null,
+                    plotShadow: false,
+                    type: 'pie'
+                },
+                title: {
+                    text: 'Thông kê trạng thái đơn hàng'
+                },
+                tooltip: {
+                    pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+                },
+                plotOptions: {
+                    pie: {
+                        allowPointSelect: true,
+                        cursor: 'pointer',
+                        dataLabels: {
+                            enabled: true,
+                            format: '<b>{point.name}</b>: {point.percentage:.1f} %',
+                            style: {
+                                color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
+                            }
+                        }
+                    }
+                },
+                series: [{
+                    name: 'Tình trạng đơn hàng',
+                    colorByPoint: true,
+                    data: [{
+                        name: 'Duyệt',
+                        y: data.Duyet,
+
+
+                    }, {
+                        name: 'Chưa duyệt',
+                        y: data.ChuaDuyet,
+
+
+                    },
+                    {
+                        name: 'Đã hủy',
+                        y: data.Huy,
+                    }]
+                }]
+            });
+        });
+    });
+
+
+</script>
+
+<script>
+    $(document).ready(function () {
+        $.getJSON("/ThongKe/GetDataProduct", function (data) {
+            var Names = []
+            var Qts = []
+            for (var i = 0; i < data.length; i++) {
+                Names.push(data[i].name);
+                Qts.push(data[i].count);
+            }
+
+            Highcharts.chart('container1', {
+                chart: {
+                    type: 'line'
+                },
+                title: {
+                    text: 'Sản phẩm mua nhiều'
+                },
+                subtitle: {
+                    text: 'Các sản phẩm được mua nhiều nhất từ khi mở của hàng'
+                },
+                xAxis: {
+                    categories: Names
+                },
+                yAxis: {
+                    title: {
+                        text: 'Số lượng'
+                    }
+                },
+                plotOptions: {
+                    line: {
+                        dataLabels: {
+                            enabled: true
+                        },
+                        enableMouseTracking: false
+                    }
+                },
+                series: [{
+                    name: 'Xu hướng',
+                    data: Qts
+                }]
+            });
+        });
+    });
+
+
+</script>
+<!--biểu đồ 1-->
+<script>
+
+
+    $(document).ready(function () {
+        $.getJSON("/ThongKe/GetDataCategory", function (data) {
+
+
+
+            Highcharts.chart('container2', {
+                chart: {
+                    plotBackgroundColor: null,
+                    plotBorderWidth: null,
+                    plotShadow: false,
+                    type: 'pie'
+                },
+                title: {
+                    text: 'Thông kê số lượng sản phẩm của các thương hiệu'
+                },
+                tooltip: {
+                    pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+                },
+                plotOptions: {
+                    pie: {
+                        allowPointSelect: true,
+                        cursor: 'pointer',
+                        dataLabels: {
+                            enabled: true,
+                            format: '<b>{point.name}</b>: {point.percentage:.1f} %',
+                            style: {
+                                color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
+                            }
+                        }
+                    }
+                },
+                series: [{
+                    name: 'Thương hiệu',
+                    colorByPoint: true,
+                    data: [{
+                        name: 'Iphone',
+                        y: data.Iphone
+                    }, {
+                        name: 'Samsung',
+                        y: data.Samsung
+                    },
+                    {
+                        name: 'Xiaomi',
+                        y: data.Xiaomi
+                    },
+                    {
+                        name: 'Oppo',
+                        y: data.Oppo
+                    }, {
+                        name: 'Nokia',
+                        y: data.Nokia
+                    }]
+                }]
+            });
+        });
+    });
+
+
+</script>
+

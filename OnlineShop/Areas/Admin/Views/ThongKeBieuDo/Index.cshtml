@@ -1,0 +1,110 @@
+﻿@*@model OnlineShop.Areas.Admin.Model.ThongKe*@
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+<!--biểu đồ 1-->
+<script src="~/Scripts/chart/exporting.js"></script>
+<script src="~/Scripts/chart/highcharts.js"></script>
+<!--biểu đồ 2-->
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/modules/exporting.js"></script>
+<script src="https://code.highcharts.com/modules/export-data.js"></script>
+<!--biểu đồ 3-->
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/modules/exporting.js"></script>
+<script src="https://code.highcharts.com/modules/export-data.js"></script>
+<script src="https://code.highcharts.com/modules/accessibility.js"></script>
+
+
+<script src="https://code.highcharts.com/gantt/highcharts-gantt.js"></script>
+<script src="https://code.highcharts.com/gantt/modules/exporting.js"></script>
+
+
+
+
+<!--biểu đồ 2-->
+<!--biểu đồ 3-->
+<figure class="highcharts-figure">
+    <div id="container2"></div>
+    <hr />
+    <br />
+</figure>
+<div class="row">
+    <div class="col-xl-8">
+        <div class="card">
+            <div class="card-header border-0" style="background-color:Highlight">
+                <div class="row align-items-center" >
+                    <div class="col">
+                        <h3 class="mb-0" style="text-align: center; color: black" >Thống kê lợi nhuận</h3>
+                    </div>
+
+                </div>
+            </div>
+            <div class="table-responsive">
+
+
+                <div style="margin-top:20px">  
+                    @Html.Partial("EmpDetails")
+                </div> 
+            </div>
+        </div>
+    </div>
+    <ul>
+    </ul>
+   
+</div>
+
+
+<!--biểu đồ 3-->
+<script>
+    
+    $(document).ready(function () {
+        $.getJSON("/ThongKeBieuDo/GetDataProfit", function (data) {
+            var Months = []
+            var Tong = []
+            var LoiNhuan = []
+            for (var i = 0; i < data.length; i++) {
+                Months.push(data[i].month);
+                Tong.push(data[i].ttien);
+                LoiNhuan.push(data[i].loinhuan);
+
+            }
+
+            Highcharts.chart('container2', {
+                chart: {
+                    type: 'line'
+                },
+                title: {
+                    text: 'Lợi nhuận'
+                },
+                subtitle: {
+                    text: 'Lợi nhuận thu được so với giá bán'
+                },
+                xAxis: {
+                    categories: Months
+                },
+                yAxis: {
+                    title: {
+                        text: 'Số tiền'
+                    }
+                },
+                plotOptions: {
+                    line: {
+                        dataLabels: {
+                            enabled: true
+                        },
+                        enableMouseTracking: false
+                    }
+                },
+                series: [{
+                    name: 'Tổng thu',
+                    data: Tong
+                }, {
+                    name: 'Lợi nhuận',
+                    data: LoiNhuan
+                }]
+            });
+        });
+    });
+</script>

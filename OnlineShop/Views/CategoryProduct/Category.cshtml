@@ -1,0 +1,46 @@
+﻿@model List<Models.EF.Product>
+@{
+    var category = (Models.EF.CategotyProduct)ViewBag.Category;
+    ViewBag.Title = category.Name;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+}
+<div class="col-md-9">
+    <div>
+        <ol class="breadcrumb">
+            <li class="active">@category.Name</li>
+
+        </ol>
+    </div>
+    <!-- /.div -->
+
+    <div class="row">
+        <!-- /.row -->
+        @foreach (var item in Model)
+        {
+            var url = "/chi-tiet/" + item.ID;
+            <div class="col-md-3 text-center col-sm-6 col-xs-6">
+                <div class="thumbnail product-box">
+                    <div class="offer-text2">
+                        Giảm còn<br /> <h7>@(item.Price.HasValue ? item.PriceKM.Value.ToString("N0"):"Liên hệ")</h7>
+                    </div>
+                    <div><a href="@url"><img style="height:120px" src="@Url.Content(item.Image)" alt="" /></a></div>
+                    <div class="caption">
+                        <div style="height:40px"><h7><a href="#">@item.Name </a></h7></div>
+                        <p>Giá : <strong>@(item.Price.HasValue ? item.Price.Value.ToString("N0"):"Liên hệ")</strong>  </p>
+
+
+                        <p><a href="@url" class="btn btn-success" role="button">Thêm vào giỏ hàng</a> <a href="#" class="btn btn-primary" role="button">Xem chi tiết</a></p>
+                    </div>
+                </div>
+            </div>
+        }
+        <!-- /.col -->
+        <!-- /.col -->
+    </div>
+ </div>
+
+
+
+
+    

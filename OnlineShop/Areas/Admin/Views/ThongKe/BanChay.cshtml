@@ -1,0 +1,33 @@
+﻿<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<script>
+    function format(n, currency) {
+        return currency + n.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,');
+    }
+    $(document).ready(function () {
+        //Call EmpDetails jsonResult Method
+        $.getJSON("/ThongKe/GetListBanChay", function (data) {
+            var tr;
+            //id= g.Key.ID,name= g.Key.Name,price= g.Key.Price,quantity= SoLuong
+            for (var i = 0; i < data.length; i++) {
+                tr = $('<tr/>');
+                tr.append("<td>" + data[i].id + "</td>");
+                tr.append("<td>" + data[i].name + "</td>");
+                tr.append("<td>" + format(data[i].price, 'vnd ') + "</td>");
+                tr.append("<td>" + data[i].quantity + "</td>");
+                $('table').append(tr);
+
+            }
+        });
+    });
+</script>
+<table class="table table-bordered table-condensed table-hover table-striped">
+    <thead>
+        <tr>
+            <th>Mã SP</th>
+            <th>Tên SP</th>
+            <th>Giá SP</th>
+            <th>Số lượng bán được</th>
+        </tr>
+    </thead>
+    <tbody></tbody>
+</table> 

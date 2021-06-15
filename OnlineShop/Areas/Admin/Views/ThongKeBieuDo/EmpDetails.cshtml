@@ -1,0 +1,32 @@
+﻿<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<script>
+    function format(n, currency) {
+        return currency + n.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,');
+    }
+    $(document).ready(function () {
+        //Call EmpDetails jsonResult Method
+        $.getJSON("/ThongKeBieuDo/GetDataProfit", function (data) {
+            var tr;
+           
+            for (var i = 0; i < data.length; i++) {
+                tr = $('<tr/>');
+                tr.append("<td>" +data[i].month + "</td>");
+                tr.append("<td>" + format(data[i].ttien, 'vnd ') + "</td>");
+                tr.append("<td>" + format(data[i].loinhuan, 'vnd ') + "</td>");
+                $('table').append(tr);
+
+            }
+        });
+    });
+</script>
+<table class="table table-bordered table-condensed table-hover table-striped">
+    <thead>
+        <tr>
+            <th>Thời gian</th>
+            <th>Doanh thu</th>
+            <th>Lợi nhuận</th>
+            
+        </tr>
+    </thead>
+    <tbody></tbody>
+</table> 

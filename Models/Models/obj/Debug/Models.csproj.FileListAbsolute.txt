@@ -1,0 +1,16 @@
+D:\NAM3\THC#\WEBCUOIKI\Models\Models\bin\Debug\Models.dll.config
+D:\NAM3\THC#\WEBCUOIKI\Models\Models\bin\Debug\Models.dll
+D:\NAM3\THC#\WEBCUOIKI\Models\Models\bin\Debug\Models.pdb
+D:\NAM3\THC#\WEBCUOIKI\Models\Models\bin\Debug\EntityFramework.dll
+D:\NAM3\THC#\WEBCUOIKI\Models\Models\bin\Debug\EntityFramework.SqlServer.dll
+D:\NAM3\THC#\WEBCUOIKI\Models\Models\bin\Debug\EntityFramework.xml
+D:\NAM3\THC#\WEBCUOIKI\Models\Models\bin\Debug\EntityFramework.SqlServer.xml
+D:\NAM3\THC#\WEBCUOIKI\Models\Models\obj\Debug\Models.csprojAssemblyReference.cache
+D:\NAM3\THC#\WEBCUOIKI\Models\Models\obj\Debug\Models.csproj.CoreCompileInputs.cache
+D:\NAM3\THC#\WEBCUOIKI\Models\Models\obj\Debug\Models.csproj.CopyComplete
+D:\NAM3\THC#\WEBCUOIKI\Models\Models\obj\Debug\Models.dll
+D:\NAM3\THC#\WEBCUOIKI\Models\Models\obj\Debug\Models.pdb
+D:\NAM3\THC#\WEBCUOIKI\Models\Models\bin\Debug\PagedList.dll
+D:\NAM3\THC#\WEBCUOIKI\Models\Models\bin\Debug\PagedList.Mvc.dll
+D:\NAM3\THC#\WEBCUOIKI\Models\Models\bin\Debug\PagedList.xml
+D:\NAM3\THC#\WEBCUOIKI\Models\Models\bin\Debug\PagedList.Mvc.xml

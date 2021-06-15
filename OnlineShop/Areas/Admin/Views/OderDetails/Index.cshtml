@@ -1,0 +1,94 @@
+﻿@model IEnumerable<Models.EF.OderDetail>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<div class=" col-md-4">
+    <i class="fa fa-list-alt"> Quản lý đơn hàng</i>
+</div>
+<br />
+
+
+<table class="table" style="background-color: white">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Oder.ShipName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Product.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Quantity)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Price)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Oder.Status)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+<tr>
+    <td>
+        @Html.DisplayFor(modelItem => item.Oder.ShipName)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Product.Name)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Quantity)
+    </td>
+    <td>
+        @(item.Price.HasValue ? item.Price.Value.ToString("N0")+" VNĐ":"Liên hệ")
+        @*@Html.DisplayFor(modelItem => item.Price)*@
+    </td>
+    <td>
+        @if (item.Oder.Status == false)
+        {
+            <p>Đã duyệt</p>
+        }
+        else
+        {
+            <p>Chưa duyệt</p>
+        }
+    </td>
+    <td>
+        @using (Html.BeginForm("Index", "Oders", FormMethod.Post))
+        {
+            if (item.Oder.Status == true)
+            {
+                <div class=" col-md-1">
+                    @Html.ActionLink("Duyệt", "Duyet", "OderDetails", new { id = item.OderID }, new { @class = "btn btn-danger" })
+                </div>
+                <div class=" col-md-1">
+                    @*<button type="button" class="btn btn-primary"><a href="@url">Chi tiết</a></button>*@
+                    @*<div class="btn-warning">
+                        <h4><a href="/chi-tiet-don-hang?orderId=@item.OderID&productId=@item.ProID" class="btn btn-success" role="button">Chi tiết</a></h4>
+                    </div>*@
+                    @Html.ActionLink("Details", "Details", new { orderId = item.OderID, productId = item.ProID }, new { @class = "btn btn-primary m-1" })
+                </div>
+            }
+            else
+            {
+                <div class=" col-md-1">
+                    @*<button type="button" class="btn btn-primary"><a href="@url">Chi tiết</a></button>*@
+                    @*<div class="btn-warning">
+                        <h4><a href="/chi-tiet-don-hang?orderId=@item.OderID&productId=@item.ProID" class="btn btn-success" role="button">Chi tiết</a></h4>
+                    </div>*@
+                    @Html.ActionLink("Details", "Details", new { orderId = item.OderID, productId = item.ProID }, new { @class = "btn btn-primary m-1" })
+                </div>
+            }
+
+        }
+
+
+    </td>
+</tr>
+    }
+
+</table>
